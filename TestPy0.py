@@ -5,11 +5,13 @@ Created on Jan 5, 2019
 '''
 import argparse
 from tf_test0 import tf_test
-
+from gui.engine import Engine
 
 
 def run(arg1, opt1=None):
-    print(arg1, " ", opt1)
+#     print(arg1, " ", opt1)
+    e = Engine()
+    e.loop()
 
 
 
