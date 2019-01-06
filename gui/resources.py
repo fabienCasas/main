@@ -5,6 +5,7 @@ Created on 7 juil. 2018
 '''
 
 import pygame
+from tensorflow.python.framework.test_ops import none
 
 class Resources:
     white = (255,255,255)
@@ -32,11 +33,13 @@ class Resources:
     def get_bounds(self):
         return pygame.Rect(0, 0, self.display_width, self.display_height)
                 
-class Event:
-    KEY_UP    = 10
-    KEY_DOWN  = -10
+class Event:    
+    KEY_NONE = 0
+    KEY_UP = 10
+    KEY_DOWN = -10
+    KEY_LEFT = -20
     KEY_RIGHT = 20
-    KEY_LEFT  = -20
+    KEY_RESTART = 254
+    KEY_QUIT = 255
 
-    RESTART   = 254
-    QUIT      = 255
+        

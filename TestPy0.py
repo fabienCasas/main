@@ -6,13 +6,17 @@ Created on Jan 5, 2019
 import argparse
 from tf_test0 import tf_test
 from gui.engine import Engine
+from player.player import Player
 
 
 def run(arg1, opt1=None):
-#     print(arg1, " ", opt1)
-    e = Engine()
-    e.loop()
-
+#   human player
+#     e = Engine()
+#     e.loop()
+#   ai player
+    p = Player()
+    p.play()
+    
 
 
 def main():

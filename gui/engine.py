@@ -14,17 +14,17 @@ class Engine:
     directions_list = [ Event.KEY_UP, Event.KEY_DOWN, Event.KEY_LEFT, Event.KEY_RIGHT ]
     
     
-    def __init__(self, ai = None):
+    def __init__(self, input):
         self.gui = Gui()
-        if ai :
-            self.input = Input(False)
+        if input :
+            self.input = input
         else :
             self.input = Input(True)
-        self.ai = ai
     
     def game_init(self):
         self.do_exit = False
         self.do_restart = False
+        self.game_over = False
         self.snake = Snake(self.gui.res)
         self.apple = Apple(self.gui.res)
         self.direction = None
@@ -33,12 +33,14 @@ class Engine:
         
     def user_input(self):
         key = self.input.get_event()
+#         print("key = ", key)
         if key in self.directions_list :
             self.direction = key
         else :
-            if key == Event.QUIT :
+#             print("not a direction")
+            if key == Event.KEY_QUIT :
                 self.do_exit = True
-            elif key == Event.RESTART :
+            elif key == Event.KEY_RESTART :
                 self.do_restart = True
         
     def score(self):
@@ -61,6 +63,9 @@ class Engine:
         # Vector
 #         dist = np.array([dx, dy])
         return dist
+    
+    def is_over(self):
+        return self.game_over
      
     
     def turn(self):
@@ -71,11 +76,13 @@ class Engine:
             self.score += 1
         # move snake 
         self.user_input()
-        game_over = False
+        self.game_over = False
         if self.direction :
-            game_over = self.snake.move(self.direction)
+            self.game_over = self.snake.move(self.direction)
+        else:
+            print("no input")
             
-        if not game_over :         
+        if not self.game_over :         
             # re-draw
             self.gui.update(self.snake, self.apple)
         else:
@@ -85,14 +92,15 @@ class Engine:
                 self.user_input()
             if self.do_restart :
                 self.game_init()
+        return self.game_over
         
 
     def loop(self):
         self.game_init()
         while not self.do_exit:
             self.turn()
-            if self.ai :
-                self.ai.compute()
-            else:
-                self.gui.clock.tick(Resources.FPS)
+            self.gui.clock.tick(Resources.FPS)
         self.gui.quit()
+        
+
+        

@@ -67,3 +67,4 @@ class Snake:
         rect_list = [h]
         for el in self.tail :
             rect_list.append(pygame.Rect(el.x, el.y, self.res.snake_girth, self.res.snake_girth))
+        return rect_list
